@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 
-import {List, Image, Dimmer, Loader} from 'semantic-ui-react'
+import {List, Image, Dimmer, Loader, Button} from 'semantic-ui-react'
 
 import {playVideo} from '../store/actions/playVideo'
+import {getNext, getPrev} from '../store/actions/searchVideo'
 
 class VideoList extends Component{
 
@@ -34,14 +35,35 @@ class VideoList extends Component{
                 }
 
                 {this.props.videos.map(video => this.renderVideo(video))}
-            </div>
+
+               { this.props.videos.length > 0 && (
+               <div>
+                <Button className="ui icon left labeled button" color='youtube' 
+                        disabled={this.props.prevPage === undefined}
+                        onClick={() => this.props.getPrev(this.props.prevPage)}>
+                        <i aria-hidden="true" className="left arrow icon"></i>
+                        Previous
+                    </Button>
+                    <Button className="ui icon right labeled button" color='youtube' 
+                            disabled={this.props.nextPage === undefined}
+                            onClick={() => this.props.getNext(this.props.nextPage)}
+                            >
+                        <i aria-hidden="true" className="right arrow icon"></i>
+                        Next
+                    </Button>
+                </div>
+                )
+                }
+            </div>            
         )
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        playVideo: (video) => dispatch(playVideo(video))
+        playVideo: (video) => dispatch(playVideo(video)),
+        getNext: (page) => dispatch(getNext(page)),
+        getPrev: (page) => dispatch(getPrev(page))
     }
 }
 
@@ -49,7 +71,9 @@ const mapStateToProps = (state) => {
     return{
         videos: state.search.videos,
         loading: state.search.loading,
-        error: state.search.error
+        error: state.search.error,
+        prevPage:state.search.prevPage,
+        nextPage:state.search.nextPage
     }
 }
 

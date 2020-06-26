@@ -1,36 +1,31 @@
 .container{
   display: grid;
   grid-template-areas: 
-  'search-bar search-bar search-bar search-bar'
-  'video-player video-player video-player video-list'
-  'video-player video-player video-player video-list'
+  'search-bar search-bar'
+  'video-player video-list'
+  'video-player video-list'
   ;
+  grid-template-columns: 1fr 1fr;
 }
 
 .search-bar{
   grid-area: search-bar;
-  background: red;
 }
 
 .video-player{
   grid-area: video-player;
-  background: #F0E68C;
+  background: #e0e1e2;
+  padding: 15px 15px;
 }
 
 .video-list{
   grid-area: video-list;
-  background: #FFFACD;
-  padding: 15px;
+  background: #e0e1e2;
+  padding: 15px 15px;
 }
 
 .video-title{
   font-weight: 600;
   color: #468284;
   padding: 10px;
-}
-
-.video-description{
-
-  padding: 10px;
-  color: #0000CD;
 }

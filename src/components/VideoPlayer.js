@@ -16,7 +16,6 @@ const VideoPlayer = props =>{
                     <div>
                         <Embed id={props.video.id.videoId} source='youtube' />
                         <p className='video-title'>{props.video.snippet.title}</p>
-                        <p className='video-description'>{props.video.snippet.description}</p>
                     </div>
                 )
             }

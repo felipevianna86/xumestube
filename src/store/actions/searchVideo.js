@@ -11,10 +11,13 @@ export const initSearchVideo = () => {
     }
 }
 
-export const searchVideoSuccess = (videos) => {
+export const searchVideoSuccess = (data) => {
     return{
         type: 'SUCCESS_SEARCH_VIDEO',
-        videos,
+        videos:data.items,
+        nextPage:data.nextPageToken,
+        pageInfo:data.pageInfo,
+        prevPage:data.prevPageToken,
         loading: false,
         error: false
     }
@@ -31,8 +34,26 @@ export const searchVideoError = () => {
 export const searchVideo = (word) => {
     return dispatch => {
         dispatch(initSearchVideo())
-        youtubeSearch(API_KEY, {q:word})
-        .then((data) => dispatch(searchVideoSuccess(data.items)))
+        youtubeSearch(API_KEY, {q:word, maxResults:4})
+        .then((data) => dispatch(searchVideoSuccess(data)))
+        .catch( () => dispatch(searchVideoError()) )
+    }
+}
+
+export const getNext = (page) => {
+    return dispatch => {
+        dispatch(initSearchVideo())
+        youtubeSearch(API_KEY, {maxResults:4, pageToken:page})
+        .then((data) => dispatch(searchVideoSuccess(data)))
+        .catch( () => dispatch(searchVideoError()) )
+    }
+}
+
+export const getPrev = (page) => {
+    return dispatch => {
+        dispatch(initSearchVideo())
+        youtubeSearch(API_KEY, {maxResults:4, pageToken:page})
+        .then((data) => dispatch(searchVideoSuccess(data)))
         .catch( () => dispatch(searchVideoError()) )
     }
 }

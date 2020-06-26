@@ -1,5 +1,8 @@
 const initialState = {
     videos:[],
+    pageInfo:{},
+    nextPage:"",
+    prevPage:"",
     loading:false,
     error: false
 }
@@ -11,6 +14,9 @@ export default function search(state = initialState, action){
             return {
                 ...state,
                 videos: [],
+                pageInfo:{},
+                nextPage:"",
+                prevPage:"",
                 loading:true,
                 error:false
             }
@@ -18,6 +24,9 @@ export default function search(state = initialState, action){
             return {
                 ...state,
                 videos:action.videos,
+                pageInfo:action.pageInfo,
+                nextPage:action.nextPage,
+                prevPage:action.prevPage,
                 loading:false,
                 error:false
             }
@@ -25,6 +34,9 @@ export default function search(state = initialState, action){
             return {
                 ...state,
                 videos:[],
+                pageInfo:{},
+                nextPage:"",
+                prevPage:"",
                 loading:false,
                 error:true
             }       
